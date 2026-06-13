@@ -203,6 +203,125 @@ The final report identifies:
 - a concrete 7-day plan;
 - context for future AI research work.
 
+## Roadmap
+
+### Planned Feature: `/paper-blueprint`
+
+Distilled PI currently focuses on:
+
+1. `/title-to-harness`
+
+   Transform a vague research title into a structured research harness.
+
+2. `/pi-grill`
+
+   Stress-test the harness through concise PI-style questioning and generate a repair report.
+
+The next planned component is:
+
+### `/paper-blueprint` (Coming Soon)
+
+Many research projects fail not because the idea is weak, but because the paper is positioned incorrectly.
+
+`/paper-blueprint` will help researchers answer:
+
+- What kind of paper is this?
+- What is the primary contribution?
+- What should not be claimed?
+- What is the most defensible narrative?
+- What sections should the paper contain?
+- How should the story be structured?
+
+Inputs:
+
+- `research-harness.md`
+- `pi-grill-report.md`
+- optional abstract, draft, proposal, or experimental results
+
+Output:
+
+- `paper-blueprint.md`
+
+Planned capabilities:
+
+#### Paper Identity
+
+Determine the most likely paper type:
+
+- Method Paper
+- Empirical Analysis Paper
+- Diagnostic Study
+- Benchmark Paper
+- Dataset Paper
+- System Paper
+- Position / Perspective Paper
+- Negative Result Paper
+
+#### Contribution Hierarchy
+
+Separate:
+
+- Primary contribution
+- Secondary contribution
+- Supporting contributions
+
+#### Narrative Design
+
+Identify:
+
+- Main claim
+- Main challenge
+- Core evidence
+- Final takeaway
+
+#### Recommended Paper Structure
+
+Generate a recommended section outline tailored to the paper type.
+
+Example:
+
+```text
+1. Introduction
+2. Motivation
+3. Diagnostic Framework
+4. Experimental Setup
+5. Main Results
+6. Alternative Explanations
+7. Discussion
+8. Limitations
+9. Conclusion
+```
+
+#### Positioning Warnings
+
+Highlight common positioning mistakes such as:
+
+- Selling an empirical study as a method paper
+- Overclaiming general intelligence or reasoning ability
+- Treating a benchmark as a scientific contribution
+- Confusing engineering improvements with research contributions
+
+#### Final Blueprint Verdict
+
+Provide a concise recommendation:
+
+```text
+What paper is this?
+What paper is it not?
+How should it be written?
+```
+
+The long-term goal of Distilled PI is:
+
+```text
+Title
+-> Research Harness
+-> PI Grill
+-> Paper Blueprint
+```
+
+The goal is to help researchers move from a vague idea to a defensible paper narrative before writing begins.
+
 ## Example Output Artifacts
 
 See:
