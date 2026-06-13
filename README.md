@@ -2,6 +2,8 @@
 
 **Chinese name:** 导师拷打器
 
+**中文定位：** 面向博士生、科研新人和年轻教师的 Agent Skill，用来在真实组会或正式写作前打磨 research idea，并进行 PI 式压力测试。
+
 <p align="center">
   <a href="https://jy00295005.github.io/distilled-pi/docs/distilled-pi-example-walkthrough.html">
     <img src="fig/1.png" alt="Distilled PI workflow overview" width="100%">
