@@ -2,6 +2,12 @@
 
 **Chinese name:** 导师拷打器
 
+<p align="center">
+  <a href="https://jy00295005.github.io/distilled-pi/docs/distilled-pi-example-walkthrough.html">
+    <img src="fig/1.png" alt="Distilled PI workflow overview" width="100%">
+  </a>
+</p>
+
 Distilled PI is a ChatGPT Skill for sharpening research ideas before they enter a real group meeting, advisor discussion, proposal, or paper draft.
 
 It is built for PhD students, research newcomers, and junior faculty who need more than encouragement. The Skill asks a small number of hard questions, forces assumptions into the open, and helps turn vague research ideas into defensible research plans.
