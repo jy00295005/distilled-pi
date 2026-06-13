@@ -1,0 +1,676 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Distilled PI Example Walkthrough</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f6f7f9;
+      --panel: #ffffff;
+      --ink: #18202a;
+      --muted: #637083;
+      --line: #d9dee7;
+      --accent: #2457d6;
+      --accent-soft: #e9efff;
+      --warn: #9b4d00;
+      --warn-soft: #fff1dc;
+      --good: #146c43;
+      --good-soft: #e8f6ef;
+      --risk: #a83232;
+      --risk-soft: #fdeaea;
+      --code-bg: #101722;
+      --code-ink: #e8edf7;
+      --radius: 8px;
+      --shadow: 0 1px 2px rgba(18, 28, 45, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.6;
+    }
+
+    header {
+      background: #ffffff;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .wrap {
+      width: min(1120px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .hero {
+      padding: 48px 0 30px;
+    }
+
+    .eyebrow {
+      margin: 0 0 10px;
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(32px, 5vw, 56px);
+      line-height: 1.05;
+      letter-spacing: 0;
+    }
+
+    .lead {
+      max-width: 780px;
+      margin: 18px 0 0;
+      color: var(--muted);
+      font-size: 18px;
+    }
+
+    .quick-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 24px;
+    }
+
+    .quick-links a {
+      display: inline-flex;
+      align-items: center;
+      min-height: 36px;
+      padding: 7px 12px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--ink);
+      background: #ffffff;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    main {
+      padding: 28px 0 56px;
+    }
+
+    section {
+      margin-top: 24px;
+      padding: 24px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    h2 {
+      margin: 0 0 14px;
+      font-size: 24px;
+      line-height: 1.2;
+      letter-spacing: 0;
+    }
+
+    h3 {
+      margin: 22px 0 10px;
+      font-size: 18px;
+      line-height: 1.25;
+      letter-spacing: 0;
+    }
+
+    p {
+      margin: 0 0 12px;
+    }
+
+    ul, ol {
+      margin: 10px 0 0;
+      padding-left: 22px;
+    }
+
+    li {
+      margin: 6px 0;
+    }
+
+    code {
+      padding: 1px 5px;
+      border-radius: 5px;
+      background: #eef1f5;
+      color: #243146;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.92em;
+    }
+
+    pre {
+      overflow-x: auto;
+      margin: 12px 0 0;
+      padding: 16px;
+      border-radius: var(--radius);
+      background: var(--code-bg);
+      color: var(--code-ink);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 13px;
+      line-height: 1.5;
+      white-space: pre;
+    }
+
+    pre code {
+      padding: 0;
+      background: transparent;
+      color: inherit;
+      font-size: inherit;
+    }
+
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .flow-step {
+      min-height: 98px;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fbfcfe;
+    }
+
+    .flow-step strong {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 14px;
+    }
+
+    .flow-step span {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 14px;
+    }
+
+    .box {
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fbfcfe;
+    }
+
+    .box h3 {
+      margin-top: 0;
+    }
+
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      padding: 4px 9px;
+      border-radius: 999px;
+      background: #eef1f5;
+      color: #2c3545;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .callout {
+      margin-top: 14px;
+      padding: 14px 16px;
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+    }
+
+    .callout.good {
+      background: var(--good-soft);
+      border-color: #b7dfca;
+      color: var(--good);
+    }
+
+    .callout.warn {
+      background: var(--warn-soft);
+      border-color: #ffd79c;
+      color: var(--warn);
+    }
+
+    .callout.risk {
+      background: var(--risk-soft);
+      border-color: #f1b8b8;
+      color: var(--risk);
+    }
+
+    .timeline {
+      display: grid;
+      gap: 14px;
+      margin-top: 14px;
+    }
+
+    .event {
+      display: grid;
+      grid-template-columns: 132px minmax(0, 1fr);
+      gap: 16px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fbfcfe;
+    }
+
+    .event-label {
+      color: var(--accent);
+      font-weight: 800;
+      font-size: 14px;
+    }
+
+    .event-body h3 {
+      margin-top: 0;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 12px;
+      font-size: 14px;
+    }
+
+    th, td {
+      padding: 10px;
+      border: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: #f1f4f8;
+      font-weight: 800;
+    }
+
+    .footer-note {
+      margin-top: 24px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    @media (max-width: 820px) {
+      .flow, .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .event {
+        grid-template-columns: 1fr;
+      }
+
+      section {
+        padding: 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap hero">
+      <p class="eyebrow">Distilled PI example walkthrough</p>
+      <h1>从一个 research title 到 PI 风格压力测试</h1>
+      <p class="lead">
+        这个页面用一次完整测试说明 Distilled PI 怎么调用、用户输入了什么、AI 如何追问、如何生成 <code>research-harness.md</code>，以及如何继续用 <code>/pi-grill</code> 生成 <code>pi-grill-report.md</code>。
+      </p>
+      <nav class="quick-links" aria-label="Page sections">
+        <a href="#overview">流程总览</a>
+        <a href="#title-to-harness">/title-to-harness</a>
+        <a href="#pi-grill">/pi-grill</a>
+        <a href="#outputs">最终产物</a>
+        <a href="#reuse">如何复现</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section id="overview">
+      <h2>流程总览</h2>
+      <p>
+        Distilled PI 不是直接帮用户写 proposal。它先把模糊题目压成可检验的 research harness，再用 PI 式问题攻击最危险的 claim、baseline、evidence 和 fallback contribution。
+      </p>
+      <div class="flow" aria-label="Distilled PI workflow">
+        <div class="flow-step">
+          <strong>1. 调用 Skill</strong>
+          <span>用户输入 <code>Use $distilled-pi</code> 和 slash workflow。</span>
+        </div>
+        <div class="flow-step">
+          <strong>2. 题目分诊</strong>
+          <span>AI 判断是 Research、Survey、Benchmark、Dataset、System 还是 Position。</span>
+        </div>
+        <div class="flow-step">
+          <strong>3. 少量追问</strong>
+          <span>AI 只问 decision-critical 的问题，不做 checklist dumping。</span>
+        </div>
+        <div class="flow-step">
+          <strong>4. 生成 Harness</strong>
+          <span>输出可继续喂给后续 AI agent 的 <code>research-harness.md</code>。</span>
+        </div>
+        <div class="flow-step">
+          <strong>5. PI Grill</strong>
+          <span>用 harness 做压力测试，输出 <code>pi-grill-report.md</code>。</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="title-to-harness">
+      <h2>第一阶段：/title-to-harness</h2>
+      <p>
+        用户先给一个 research title 和几句话背景。Skill 的任务不是写 proposal，而是判断题目类型、追问关键缺口，然后生成一个结构化 harness。
+      </p>
+
+      <h3>用户调用方式</h3>
+      <pre><code>Use $distilled-pi
+
+/title-to-harness
+
+Title:
+Can Small Language Models Learn to Self-Correct Through Synthetic Critiques?
+
+Optional context:
+I want to test whether 1B-3B open-source language models can acquire genuine self-correction behavior from critiques generated by stronger models, rather than merely learning critique-style answer rewriting.
+
+Important:
+When the final harness markdown is generated, please save it directly as a Markdown file named `research-harness.md`.</code></pre>
+
+      <div class="timeline">
+        <article class="event">
+          <div class="event-label">Step 0</div>
+          <div class="event-body">
+            <h3>AI 先做 Title Triage</h3>
+            <p>AI 判断该题目是 <strong>Research Paper</strong>，confidence 是 High。</p>
+            <div class="callout warn">
+              关键提醒：题目里的 <strong>self-correction</strong> 是危险词。如果不定义清楚，reviewer 会把它理解成比实验能证明的东西更强的认知能力 claim。
+            </div>
+          </div>
+        </article>
+
+        <article class="event">
+          <div class="event-label">Step 1</div>
+          <div class="event-body">
+            <h3>AI 只问 5 个 broad intake 问题</h3>
+            <ol>
+              <li>Core claim：最强但可防守的 claim 是什么？</li>
+              <li>Operational definition：什么才算 genuine self-correction？什么不算？</li>
+              <li>Strongest baseline：哪个 baseline 最可能杀死项目？</li>
+              <li>Minimum evidence path：最小实验、ablation 和 diagnostic 是什么？</li>
+              <li>Falsification condition：什么结果会让你停止使用 strong claim？</li>
+            </ol>
+          </div>
+        </article>
+
+        <article class="event">
+          <div class="event-label">User</div>
+          <div class="event-body">
+            <h3>用户回答的核心内容</h3>
+            <div class="grid">
+              <div class="box">
+                <h3>Claim</h3>
+                <p>不 defend “robust self-correction”。更安全的说法是：synthetic critiques 在特定 diagnostic conditions 下提供超过 corrected-answer supervision 的价值。</p>
+              </div>
+              <div class="box">
+                <h3>Definition</h3>
+                <p>Self-correction 必须体现 critique correctness sensitivity、unseen error type transfer，以及 critique quality 改变时行为也改变。</p>
+              </div>
+              <div class="box">
+                <h3>Baseline</h3>
+                <p>最危险 baseline 是 answer-only finetuning。它能直接测试 critique 是否真的有额外信息价值。</p>
+              </div>
+              <div class="box">
+                <h3>Falsification</h3>
+                <p>如果 answer-only matching、critique corruption 无影响、unseen error type 上 gains 消失，就停止使用 “learn to self-correct”。</p>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="event">
+          <div class="event-label">Decision</div>
+          <div class="event-body">
+            <h3>AI 做 Answer Quality Check</h3>
+            <table>
+              <thead>
+                <tr>
+                  <th>维度</th>
+                  <th>判断</th>
+                  <th>原因</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Core claim</td>
+                  <td>Clear</td>
+                  <td>claim 已经从 strong self-correction 收窄到 critique-content dependence。</td>
+                </tr>
+                <tr>
+                  <td>Novelty path</td>
+                  <td>Clear</td>
+                  <td>novelty 是 diagnostic empirical analysis，不是简单 method novelty。</td>
+                </tr>
+                <tr>
+                  <td>Strongest baseline</td>
+                  <td>Clear</td>
+                  <td>answer-only finetuning 被明确为最危险 baseline。</td>
+                </tr>
+                <tr>
+                  <td>Implementation details</td>
+                  <td>Partial</td>
+                  <td>model family、optimizer、dataset size 和 metric threshold 还没定，但不阻塞第一版 harness。</td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="callout good">
+              Decision: Proceed to first harness. No targeted follow-up needed.
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <h3>第一阶段输出</h3>
+      <p>AI 生成并保存了 <code>research-harness.md</code>。关键结构如下：</p>
+      <div class="tag-row">
+        <span class="tag">Research Question</span>
+        <span class="tag">Operational Definition</span>
+        <span class="tag">Core Hypotheses</span>
+        <span class="tag">Baselines</span>
+        <span class="tag">Ablations</span>
+        <span class="tag">Falsification Conditions</span>
+        <span class="tag">Next 7-Day Plan</span>
+      </div>
+      <pre><code>## 6. Operational Definition
+
+For this project, genuine self-correction means that a model:
+- improves initially incorrect answers after receiving critique information;
+- is sensitive to whether the critique is correct, generic, unrelated, or misleading;
+- transfers at least partially to unseen error types;
+- changes behavior when critique quality changes.
+
+The safe operational label for early experiments is critique-conditioned correction behavior, not robust self-correction.</code></pre>
+    </section>
+
+    <section id="pi-grill">
+      <h2>第二阶段：/pi-grill</h2>
+      <p>
+        用户把 <code>research-harness.md</code> 作为 source of truth 交给 Skill。Skill 不重新 brainstorm，而是模拟真实 PI meeting，集中攻击最可能改变项目方向的问题。
+      </p>
+
+      <h3>用户调用方式</h3>
+      <pre><code>/pi-grill
+
+I am providing the research-harness.md generated by /title-to-harness.
+
+Please act as a demanding PI who is blunt because they want to protect the student from wasting months on a weak claim.
+
+Rules:
+- Ask only the 2-3 questions that matter most.
+- Do not ask checklist questions.
+- Focus on claim validity, novelty, evidence, falsification, and fallback contribution.
+- Critique first, then provide a repair path.
+- Optimize for finding the fastest way to kill or substantially reshape the project.
+
+When the final report is generated:
+- Save it as pi-grill-report.md
+- Include PI Focus, Research Risk Heatmap, and PI Verdict.</code></pre>
+
+      <div class="timeline">
+        <article class="event">
+          <div class="event-label">Diagnosis</div>
+          <div class="event-body">
+            <h3>AI 选择 PI Focus</h3>
+            <p><strong>PI Focus: Experiment design</strong></p>
+            <p>主危险：如果 ablation 不能证明 critique-content dependence，这个项目会退化成 answer-only supervision 的变体。</p>
+          </div>
+        </article>
+
+        <article class="event">
+          <div class="event-label">Round 1</div>
+          <div class="event-body">
+            <h3>AI 只问 3 个关键问题</h3>
+            <ol>
+              <li><strong>阈值问题：</strong>什么 exact result pattern 能证明 critique content causally matters？阈值是多少？</li>
+              <li><strong>fallback 问题：</strong>如果 answer-only finetuning matched critique training，第二天这篇 paper 的 title 和 contribution 是什么？</li>
+              <li><strong>leakage 问题：</strong>怎么防止 GPT-4-level critique 直接泄漏 corrected reasoning，让实验变得 trivial？</li>
+            </ol>
+            <div class="callout risk">
+              这三个问题分别攻击 experiment design、fallback contribution 和 evidence validity，没有重复攻击同一个弱点。
+            </div>
+          </div>
+        </article>
+
+        <article class="event">
+          <div class="event-label">User</div>
+          <div class="event-body">
+            <h3>用户回答后的状态</h3>
+            <ul>
+              <li>给出 provisional thresholds：3 absolute points、2 absolute points、half-drop、30-50% transfer。</li>
+              <li>给出 fallback paper title：<em>Synthetic Critiques Mostly Behave Like Corrected-Answer Supervision for Small Language Models</em>。</li>
+              <li>给出 leakage control：critique-only、correction-only、critique-plus-correction、leaky critique。</li>
+            </ul>
+            <div class="callout warn">
+              重要修正：这些 thresholds 是 provisional，应该根据 pilot variance 调整，不能写成跨任务、跨模型的固定 Skill 规则。
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <h3>第二阶段输出</h3>
+      <p>AI 生成并保存了 <code>pi-grill-report.md</code>。报告的核心结论：</p>
+      <div class="grid">
+        <div class="box">
+          <h3>PI's Main Concern</h3>
+          <p>项目能否证明 valid critique content 的因果贡献，而不是只证明 corrected-answer supervision 有用。</p>
+        </div>
+        <div class="box">
+          <h3>PI Verdict</h3>
+          <p>Ready for a pilot experiment. Not ready for a full paper draft. 当前更像 empirical diagnostic paper，不是 method paper。</p>
+        </div>
+      </div>
+
+      <h3>Research Risk Heatmap</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Risk Type</th>
+            <th>Level</th>
+            <th>Reason</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Claim Risk</td>
+            <td>HIGH</td>
+            <td>题目仍暗示 robust self-correction，pilot 未必能支持。</td>
+          </tr>
+          <tr>
+            <td>Novelty Risk</td>
+            <td>MEDIUM</td>
+            <td>方法本身不够新，diagnostic protocol 才是贡献。</td>
+          </tr>
+          <tr>
+            <td>Experiment Risk</td>
+            <td>MEDIUM</td>
+            <td>ablation plan 不错，但 threshold rules 必须结合 pilot variance 校准。</td>
+          </tr>
+          <tr>
+            <td>Execution Risk</td>
+            <td>MEDIUM</td>
+            <td>non-leaky critiques 和 misleading critiques 的构造很敏感。</td>
+          </tr>
+          <tr>
+            <td>Publication Risk</td>
+            <td>MEDIUM</td>
+            <td>正负结果都可能有价值，前提是定位成 diagnostic empirical analysis。</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="outputs">
+      <h2>最终结果是什么</h2>
+      <div class="grid">
+        <div class="box">
+          <h3><code>research-harness.md</code></h3>
+          <p>把 vague title 变成可检查、可复用的研究骨架。最重要的改进是增加 <code>Operational Definition</code>，把 self-correction 收窄成可验证的 critique-conditioned correction behavior。</p>
+        </div>
+        <div class="box">
+          <h3><code>pi-grill-report.md</code></h3>
+          <p>把 harness 拿去 PI 式拷打，输出最危险的问题、风险热图、下一步计划和 PI Verdict。</p>
+        </div>
+      </div>
+      <div class="callout good">
+        这次测试的最终判断：项目值得做 pilot experiment，但不要急着写 full paper，也不要在 diagnostics 通过前使用强 self-correction claim。
+      </div>
+    </section>
+
+    <section id="reuse">
+      <h2>用户如何复现这个流程</h2>
+      <h3>1. 先运行 /title-to-harness</h3>
+      <pre><code>Use $distilled-pi
+
+/title-to-harness
+
+Title:
+&lt;your research title&gt;
+
+Optional context:
+&lt;your short background, concern, or idea&gt;</code></pre>
+
+      <h3>2. 回答 AI 的 broad intake 问题</h3>
+      <p>重点回答 claim、definition、baseline、minimum evidence path 和 falsification condition。实现细节可以先留作 unknowns。</p>
+
+      <h3>3. 保存生成的 harness</h3>
+      <pre><code>Filename: research-harness.md</code></pre>
+
+      <h3>4. 再运行 /pi-grill</h3>
+      <pre><code>Use $distilled-pi
+
+/pi-grill
+
+I am providing the research-harness.md generated by /title-to-harness.
+
+&lt;paste research-harness.md here&gt;</code></pre>
+
+      <h3>5. 回答 Round 1 的 PI 问题</h3>
+      <p>如果回答足够强，AI 会跳过 Round 2，直接生成最终 repair synthesis 和 <code>pi-grill-report.md</code>。</p>
+
+      <p class="footer-note">
+        本页面是一个静态 walkthrough。它解释的是一次完整测试，不替代 Skill 的正式实现文件。正式规则仍在 <code>skill/SKILL.md</code> 和 <code>skill/references/</code> 中。
+      </p>
+    </section>
+  </main>
+</body>
+</html>

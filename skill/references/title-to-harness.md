@@ -188,7 +188,37 @@ Missing:
 - ...
 ```
 
-If most critical items are clear, generate the harness. If 2 or more critical items are missing or vague, ask one targeted follow-up.
+Always include a `Decision` line after the quality check:
+
+```markdown
+Decision:
+Proceed to first harness. No targeted follow-up needed.
+```
+
+or:
+
+```markdown
+Decision:
+Ask one targeted follow-up before generating the harness.
+```
+
+or:
+
+```markdown
+Decision:
+Use assistive defaults and proceed.
+```
+
+Only ask a targeted follow-up if a decision-critical field is missing or too vague:
+
+- core claim
+- novelty path
+- strongest baseline
+- minimum experiment / evidence path
+- falsification
+- paper type
+
+Do not ask a targeted follow-up only because non-blocking implementation details are missing, such as exact model family, optimizer, dataset size, exact metric threshold, final dataset choice, or exact paper venue. These can be marked under `Assumptions and Unknowns` in the first harness.
 
 ## Step 3: Targeted Follow-up
 
@@ -252,6 +282,8 @@ Use concise but complete content. Fill sections with research-agent-readable not
 
 Filename: `research-harness.md`
 
+Always include `## 6. Operational Definition` in research harnesses. Use it to pin down overloaded research terms, especially when the title contains terms such as `self-correction`, `reasoning`, `robustness`, `alignment`, `generalization`, `agency`, `understanding`, or `intelligence`.
+
 ```markdown
 # Research Harness
 
@@ -267,33 +299,35 @@ Filename: `research-harness.md`
 
 ## 5. Research Question
 
-## 6. Core Hypotheses
+## 6. Operational Definition
 
-## 7. Novelty Claim
+## 7. Core Hypotheses
 
-## 8. Related Work Buckets
+## 8. Novelty Claim
 
-## 9. Proposed Approach
+## 9. Related Work Buckets
 
-## 10. Minimum Viable Experiment
+## 10. Proposed Approach
 
-## 11. Baselines
+## 11. Minimum Viable Experiment
 
-## 12. Ablations
+## 12. Baselines
 
-## 13. Evaluation Metrics
+## 13. Ablations
 
-## 14. Falsification Conditions
+## 14. Evaluation Metrics
 
-## 15. Expected Contributions
+## 15. Falsification Conditions
 
-## 16. Known Risks
+## 16. Expected Contributions
 
-## 17. Assumptions and Unknowns
+## 17. Known Risks
 
-## 18. Next 7-Day Plan
+## 18. Assumptions and Unknowns
 
-## 19. Questions for PI
+## 19. Next 7-Day Plan
+
+## 20. Questions for PI
 ```
 
 ### Survey Harness
@@ -496,12 +530,16 @@ Filename: `position-harness.md`
 
 Use a senior PI / senior PhD voice:
 
+- Strict, but genuinely cares about the student.
 - Direct but supportive.
 - Skeptical but not discouraging.
 - Force clarity.
 - Mark assumptions.
 - Prefer falsifiable claims.
 - Avoid overclaiming.
+- Do not flatter.
+- Do not be cruel.
+- Critique first, then give a repair path.
 
 Acceptable short lines:
 
@@ -511,4 +549,3 @@ The claim is too soft.
 This is not a bad idea, but right now it is an experiment idea, not a paper.
 This needs a hypothesis that can be proven wrong.
 ```
-

@@ -22,6 +22,9 @@ Step 5: Generate Harness Markdown
 - Do not write a full proposal first.
 - Triage the title type before asking research design questions.
 - Ask at most two rounds of questions.
+- After answer quality check, emit a clear `Decision` field.
+- Ask targeted follow-up only when decision-critical fields are missing.
+- Include `Operational Definition` in research harnesses for overloaded concepts such as self-correction, reasoning, robustness, alignment, generalization, agency, understanding, or intelligence.
 - If the user cannot answer, provide plausible candidate assumptions and recommend the safest default.
 - Always mark assumptions, risks, and unknowns.
 - Generate a Markdown artifact suitable for later `/pi-grill` use.
@@ -34,4 +37,3 @@ Step 5: Generate Harness Markdown
 - `dataset-harness.md`
 - `system-harness.md`
 - `position-harness.md`
-

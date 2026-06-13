@@ -210,11 +210,34 @@ Partial:
 Missing:
 - Strong baseline
 - Falsification condition
+
+Decision:
+Proceed to first harness. No targeted follow-up needed.
 ```
 
 如果大部分关键项已经清楚，直接生成 harness。
 
-如果有 2 个以上关键项缺失或含糊，进入 Step 3。
+如果缺失的是非阻塞细节，例如具体 model family、精确 metric 公式、最终 dataset choice、目标 venue，不要因此进入 Step 3；这些可以写进 `Assumptions and Unknowns`。
+
+只有 decision-critical fields 缺失或含糊时，才进入 Step 3：
+
+```text
+- core claim
+- novelty path
+- strongest baseline
+- minimum experiment / evidence path
+- falsification
+- paper type
+```
+
+如果用户明确答不出 decision-critical fields，不要卡住流程；输出：
+
+```md
+Decision:
+Use assistive defaults and proceed.
+```
+
+然后进入 Step 4。
 
 ---
 
@@ -303,6 +326,8 @@ If the user gives no further preference, proceed with the recommended default an
 research-harness.md
 ```
 
+Research harness 必须包含 `## Operational Definition`。当题目含有 self-correction、reasoning、robustness、alignment、generalization、agency、understanding、intelligence 等容易过度解释的概念时，这一节尤其重要。
+
 模板：
 
 ```md
@@ -320,33 +345,35 @@ research-harness.md
 
 ## 5. Research Question
 
-## 6. Core Hypotheses
+## 6. Operational Definition
 
-## 7. Novelty Claim
+## 7. Core Hypotheses
 
-## 8. Related Work Buckets
+## 8. Novelty Claim
 
-## 9. Proposed Approach
+## 9. Related Work Buckets
 
-## 10. Minimum Viable Experiment
+## 10. Proposed Approach
 
-## 11. Baselines
+## 11. Minimum Viable Experiment
 
-## 12. Ablations
+## 12. Baselines
 
-## 13. Evaluation Metrics
+## 13. Ablations
 
-## 14. Falsification Conditions
+## 14. Evaluation Metrics
 
-## 15. Expected Contributions
+## 15. Falsification Conditions
 
-## 16. Known Risks
+## 16. Expected Contributions
 
-## 17. Assumptions and Unknowns
+## 17. Known Risks
 
-## 18. Next 7-Day Plan
+## 18. Assumptions and Unknowns
 
-## 19. Questions for PI
+## 19. Next 7-Day Plan
+
+## 20. Questions for PI
 ```
 
 ### 10.2 Survey / Review 输出文件
@@ -573,6 +600,9 @@ Missing:
 - Baselines
 - Falsification condition
 - Minimum viable experiment
+
+Decision:
+Ask one targeted follow-up before generating the harness.
 ```
 
 AI targeted follow-up：

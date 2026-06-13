@@ -37,8 +37,11 @@ Step 7: Generate pi-grill-report.md
 - Stop if no harness is provided.
 - Treat the harness as source of truth.
 - Use optional materials only to sharpen questions or detect mismatch.
+- Emit a single `PI Focus` before Round 1.
 - Ask only 2-3 questions in Round 1.
+- Make Round 1 questions cover distinct weaknesses rather than repeating the same attack.
 - Ask only 1-2 questions in Round 2, and only if needed.
+- Include a Research Risk Heatmap in `pi-grill-report.md`.
+- End with a `PI Verdict` that says what the project currently is and what the student should do next.
 - Critique first, then provide a concrete repair path.
 - Generate `pi-grill-report.md` for later AI research work.
-

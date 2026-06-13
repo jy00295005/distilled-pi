@@ -40,6 +40,14 @@ The Skill is intentionally skeptical but helpful:
 - preference for falsifiable claims;
 - critique first, repair second.
 
+## Demo Walkthrough
+
+See the full rendered example walkthrough:
+
+[`distilled-pi-example-walkthrough.html`](https://jy00295005.github.io/distilled-pi/docs/distilled-pi-example-walkthrough.html)
+
+The walkthrough shows the complete flow from `/title-to-harness` to `/pi-grill`: user input, AI questions, user answers, generated `research-harness.md`, final `pi-grill-report.md`, risk heatmap, and PI verdict.
+
 ## Who It Is For
 
 Distilled PI is designed for:
@@ -138,6 +146,8 @@ The final report identifies:
 
 See:
 
+- [Rendered demo walkthrough](https://jy00295005.github.io/distilled-pi/docs/distilled-pi-example-walkthrough.html)
+- [`docs/distilled-pi-example-walkthrough.html`](docs/distilled-pi-example-walkthrough.html)
 - [`examples/example-title.md`](examples/example-title.md)
 - [`examples/example-research-harness.md`](examples/example-research-harness.md)
 - [`examples/example-pi-grill-report.md`](examples/example-pi-grill-report.md)
