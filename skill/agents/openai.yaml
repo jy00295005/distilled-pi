@@ -1,0 +1,6 @@
+interface:
+  display_name: "Distilled PI"
+  short_description: "PI-style research idea stress testing"
+  default_prompt: "Use $distilled-pi to turn my rough research title into a harness, then pressure-test it before a PI meeting."
+policy:
+  allow_implicit_invocation: true
