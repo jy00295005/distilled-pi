@@ -8,7 +8,7 @@
   </a>
 </p>
 
-Distilled PI is a ChatGPT Skill for sharpening research ideas before they enter a real group meeting, advisor discussion, proposal, or paper draft.
+Distilled PI is an Agent Skill for sharpening research ideas before they enter a real group meeting, advisor discussion, proposal, or paper draft. It is packaged first for OpenAI Codex / ChatGPT-style Skills, and also includes a Claude Code adapter.
 
 It is built for PhD students, research newcomers, and junior faculty who need more than encouragement. The Skill asks a small number of hard questions, forces assumptions into the open, and helps turn vague research ideas into defensible research plans.
 
@@ -18,7 +18,7 @@ This project is inspired by my own research training with my strict advisor, **P
 
 During my PhD, group meetings were not just status updates. They were where research ideas were tested under pressure: unclear claims were exposed, weak experimental plans were challenged, and vague intuitions had to become precise research questions. At the time, that pressure was demanding. In retrospect, it was one of the most useful parts of learning how to think like a researcher.
 
-Distilled PI is my attempt to distill that experience into a reusable ChatGPT Skill.
+Distilled PI is my attempt to distill that experience into a reusable Agent Skill.
 
 The goal is not to imitate a person, and not to create an adversarial chatbot. The goal is to preserve the useful part of a rigorous PI meeting: concise critique, high standards, and concrete repair paths.
 
@@ -46,11 +46,64 @@ The Skill is intentionally skeptical but helpful:
 - preference for falsifiable claims;
 - critique first, repair second.
 
+## Platform Support
+
+Distilled PI is designed as a portable `SKILL.md` workflow.
+
+- **OpenAI Codex / ChatGPT-style Skills:** use the canonical implementation in [`skill/`](skill/), with UI metadata in [`skill/agents/openai.yaml`](skill/agents/openai.yaml).
+- **Claude Code:** use the project-level adapter in [`.claude/skills/distilled-pi/SKILL.md`](.claude/skills/distilled-pi/SKILL.md), plus slash command wrappers in [`.claude/commands/`](.claude/commands/).
+
+The core instructions live in one place: [`skill/SKILL.md`](skill/SKILL.md) and [`skill/references/`](skill/references/). Platform-specific files are thin adapters so the Codex and Claude versions do not drift apart.
+
+### Codex Usage
+
+```text
+Use $distilled-pi
+
+/title-to-harness
+Title:
+...
+```
+
+Then run:
+
+```text
+Use $distilled-pi
+
+/pi-grill
+<paste research-harness.md>
+```
+
+### Claude Code Usage
+
+When this repository is opened in Claude Code, the project-level files under `.claude/` expose the same workflows:
+
+```text
+/title-to-harness
+Title:
+...
+```
+
+Then run:
+
+```text
+/pi-grill
+<paste research-harness.md>
+```
+
+Claude should treat the files under `skill/` as the canonical source of truth and use the `.claude/` files only as routing wrappers.
+
 ## Demo Walkthrough
 
 See the full rendered example walkthrough:
 
 [`distilled-pi-example-walkthrough.html`](https://jy00295005.github.io/distilled-pi/docs/distilled-pi-example-walkthrough.html)
+
+<p align="center">
+  <a href="https://jy00295005.github.io/distilled-pi/docs/distilled-pi-example-walkthrough.html">
+    <img src="fig/3.png" alt="Detailed Distilled PI usage instructions" width="100%">
+  </a>
+</p>
 
 The walkthrough shows the complete flow from `/title-to-harness` to `/pi-grill`: user input, AI questions, user answers, generated `research-harness.md`, final `pi-grill-report.md`, risk heatmap, and PI verdict.
 
@@ -165,15 +218,16 @@ distilled-pi/
 ├── design/                  # Source design documents
 ├── docs/                    # Product-level documentation
 ├── examples/                # Example inputs and output artifacts
-└── skill/                   # ChatGPT Skill implementation
+├── .claude/                 # Claude Code project adapter and slash commands
+└── skill/                   # Canonical Agent Skill implementation
     ├── SKILL.md             # Skill entry point and workflow router
-    ├── agents/openai.yaml   # UI metadata
+    ├── agents/openai.yaml   # OpenAI/Codex UI metadata
     └── references/          # Detailed workflow instructions
 ```
 
 ## Current Status
 
-The first functional Skill implementation is available under [`skill/`](skill/).
+The first functional Skill implementation is available under [`skill/`](skill/). Claude Code support is provided through [`.claude/`](.claude/) without duplicating the core workflow instructions.
 
 The original workflow designs are in [`design/`](design/), and the operational instructions used by the Skill are in [`skill/references/`](skill/references/).
 

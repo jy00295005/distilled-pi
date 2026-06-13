@@ -1,6 +1,6 @@
 # Project Introduction
 
-Distilled PI, 中文名“导师拷打器”, is a research idea pressure-testing Skill. It is designed for the moment before a real PI meeting, group meeting, proposal discussion, or formal writing session, when a research idea needs to become sharper, narrower, and more defensible.
+Distilled PI, 中文名“导师拷打器”, is a research idea pressure-testing Agent Skill. It is designed for the moment before a real PI meeting, group meeting, proposal discussion, or formal writing session, when a research idea needs to become sharper, narrower, and more defensible.
 
 The product stance is:
 
@@ -39,10 +39,18 @@ rough title
 -> revised harness / proposal / experiment plan
 ```
 
+## Platform Shape
+
+Distilled PI keeps the core workflow instructions in `skill/` and uses thin platform adapters:
+
+- `skill/`: canonical Codex / OpenAI Skill package.
+- `.claude/`: Claude Code project adapter and slash command wrappers.
+
+The adapters should route to the same `skill/SKILL.md` and `skill/references/` instructions rather than maintaining separate workflow copies.
+
 ## Design Sources
 
 The complete workflow designs live in:
 
 - `design/title-to-harness.md`
 - `design/pi-grill.md`
-
