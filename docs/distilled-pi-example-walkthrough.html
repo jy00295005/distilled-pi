@@ -191,6 +191,16 @@
       font-size: 13px;
     }
 
+    .overview-visual {
+      display: block;
+      width: 100%;
+      height: auto;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #ffffff;
+      box-shadow: var(--shadow);
+    }
+
     .grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -339,32 +349,7 @@
 
   <main class="wrap">
     <section id="overview">
-      <h2>Workflow Overview</h2>
-      <p>
-        Distilled PI does not jump straight into proposal writing. It first compresses a vague title into a testable research harness, then uses PI-style questions to attack the most dangerous claim, baseline, evidence path, and fallback contribution.
-      </p>
-      <div class="flow" aria-label="Distilled PI workflow">
-        <div class="flow-step">
-          <strong>1. Invoke the Skill</strong>
-          <span>The user enters <code>Use $distilled-pi</code> and a slash-style workflow.</span>
-        </div>
-        <div class="flow-step">
-          <strong>2. Triage the title</strong>
-          <span>The AI classifies the idea as Research, Survey, Benchmark, Dataset, System, or Position.</span>
-        </div>
-        <div class="flow-step">
-          <strong>3. Ask hard questions</strong>
-          <span>The AI asks only decision-critical questions, not a generic checklist.</span>
-        </div>
-        <div class="flow-step">
-          <strong>4. Generate a harness</strong>
-          <span>The output is <code>research-harness.md</code>, ready for later AI or human review.</span>
-        </div>
-        <div class="flow-step">
-          <strong>5. Run PI Grill</strong>
-          <span>The harness is stress-tested and converted into <code>pi-grill-report.md</code>.</span>
-        </div>
-      </div>
+      <img class="overview-visual" src="../fig/2.png" alt="Distilled PI multi-round PI grilling workflow">
     </section>
 
     <section id="title-to-harness">
